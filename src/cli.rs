@@ -71,6 +71,11 @@ pub(crate) fn cli() -> anyhow::Result<()> {
             }
             Commands::Edit(args) => {
                 let path = std::path::PathBuf::from(args.path.clone());
+                if path.is_dir() {
+                    println!("Opening directories from 'ki edit' not supported, sorry!");
+                    return Ok(());
+                }
+
                 if !path.exists() {
                     std::fs::write(path, "")?;
                 }
